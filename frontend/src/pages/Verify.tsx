@@ -5,7 +5,7 @@ import { config } from '../main'
 import { VERIVAULT_ABI } from '../abi/VeriVault'
 import { keccak256, toHex } from 'viem'
 
-const BACKEND = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'
+const BACKEND = 'https://backend-jade-zeta.vercel.app'
 const CONTRACT_ADDRESS = (import.meta.env.VITE_CONTRACT_ADDRESS || '').trim() as `0x${string}`
 const ISSUER_ROLE = keccak256(toHex('ISSUER_ROLE'))
 

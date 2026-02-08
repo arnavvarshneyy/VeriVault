@@ -3,7 +3,7 @@ import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 import { VERIVAULT_ABI } from '../abi/VeriVault'
 import { parseEventLogs } from 'viem'
 
-const BACKEND = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4001'
+const BACKEND = 'https://backend-jade-zeta.vercel.app'
 const CONTRACT_ADDRESS = (import.meta.env.VITE_CONTRACT_ADDRESS || '').trim() as `0x${string}`
 
 export default function Issue() {
