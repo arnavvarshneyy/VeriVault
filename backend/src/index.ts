@@ -35,6 +35,15 @@ function getContract() {
 
 app.get('/health', (_req: Request, res: Response) => res.json({ ok: true }));
 
+app.get('/test-env', (_req: Request, res: Response) => {
+  res.json({
+    PINATA_JWT: process.env.PINATA_JWT ? 'SET' : 'NOT SET',
+    RPC_URL: process.env.RPC_URL ? 'SET' : 'NOT SET',
+    CONTRACT_ADDRESS: process.env.CONTRACT_ADDRESS ? 'SET' : 'NOT SET',
+    IPFS_GATEWAY: process.env.IPFS_GATEWAY || 'DEFAULT'
+  });
+});
+
 // Upload certificate file to IPFS via Pinata
 app.post('/api/ipfs/upload', upload.single('file'), async (req: Request, res: Response) => {
   try {
