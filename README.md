@@ -68,19 +68,40 @@ npm install
 cd ..
 ```
 
-3. **Set up environment variables**
-```bash
-# Copy environment files
-cp .env.example .env
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-```
-
 4. **Configure environment**
 Edit the following files with your configuration:
 - `.env`: Root environment variables
 - `backend/.env`: Backend API configuration (Pinata JWT, RPC URL, contract address)
 - `frontend/.env`: Frontend configuration (API URL, contract address)
+
+5. **Set up environment variables**
+```bash
+### Environment Variables (Backend)
+```env
+PORT=4000
+PINATA_JWT=your_pinata_jwt_token
+RPC_URL=https://your_ethereum_rpc_url
+CONTRACT_ADDRESS=0x...
+IPFS_GATEWAY=https://gateway.pinata.cloud/ipfs/
+```
+
+```bash
+### Environment Variables (Frontend)
+```env
+VITE_BACKEND_URL=http://localhost:3001
+VITE_CONTRACT_ADDRESS=0x...
+```
+
+
+```bash
+### Environment Variables (Root)
+```env
+SEPOLIA_RPC_URL=
+DEPLOYER_PRIVATE_KEY=
+ETHERSCAN_API_KEY=
+```
+
+```
 
 ### Development
 
@@ -141,14 +162,6 @@ npm run dev
 ### Health Check
 - `GET /health`: API health status
 
-### Environment Variables (Backend)
-```env
-PORT=4000
-PINATA_JWT=your_pinata_jwt_token
-RPC_URL=https://your_ethereum_rpc_url
-CONTRACT_ADDRESS=0x...
-IPFS_GATEWAY=https://gateway.pinata.cloud/ipfs/
-```
 
 ## � Deployment
 
