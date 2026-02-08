@@ -18,6 +18,13 @@ A decentralized certificate verification platform built on Ethereum blockchain. 
 - Built with OpenZeppelin's ERC721 standard for NFT-based certificates
 - Access control for authorized certificate issuers
 
+### Backend API
+- **Express.js** REST API server with TypeScript
+- **IPFS Integration**: Pinata service for decentralized file storage
+- **Blockchain Interaction**: Ethers.js for smart contract communication
+- **File Upload**: Multer for handling certificate file uploads
+- **Security**: SHA256 hashing for file integrity verification
+
 ### Frontend
 - **React 18** with TypeScript
 - **Vite** for fast development and building
@@ -50,6 +57,11 @@ cd VeriVault
 # Install root dependencies
 npm install
 
+# Install backend dependencies
+cd backend
+npm install
+cd ..
+
 # Install frontend dependencies
 cd frontend
 npm install
@@ -60,14 +72,15 @@ cd ..
 ```bash
 # Copy environment files
 cp .env.example .env
+cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
 ```
 
 4. **Configure environment**
-Edit `.env` and `frontend/.env` with your configuration:
-- Private keys for deployment
-- RPC URLs
-- Contract addresses
+Edit the following files with your configuration:
+- `.env`: Root environment variables
+- `backend/.env`: Backend API configuration (Pinata JWT, RPC URL, contract address)
+- `frontend/.env`: Frontend configuration (API URL, contract address)
 
 ### Development
 
@@ -76,23 +89,29 @@ Edit `.env` and `frontend/.env` with your configuration:
 npm run build
 ```
 
-2. **Run local blockchain**
+2. **Start backend server**
+```bash
+cd backend
+npm run dev
+```
+
+3. **Run local blockchain** (in new terminal)
 ```bash
 npx hardhat node
 ```
 
-3. **Deploy contracts (in new terminal)**
+4. **Deploy contracts** (in new terminal)
 ```bash
 npx hardhat run scripts/deploy.ts --network localhost
 ```
 
-4. **Start frontend development server**
+5. **Start frontend development server** (in new terminal)
 ```bash
 cd frontend
 npm run dev
 ```
 
-5. **Open your browser** and navigate to `http://localhost:5173`
+6. **Open your browser** and navigate to `http://localhost:5173`
 
 ## 📜 Smart Contract Functions
 
@@ -107,7 +126,31 @@ npm run dev
 - Certificate ownership follows ERC721 standard
 - Transfer restrictions for certificate integrity
 
-## 🔗 Deployment
+## � Backend API Endpoints
+
+### File Management
+- `POST /api/ipfs/upload`: Upload certificate files to IPFS
+  - Request: `multipart/form-data` with file
+  - Response: `{ cid, file_hash_sha256 }`
+
+### Certificate Operations
+- `GET /api/certificate/:tokenId`: Get certificate details from blockchain
+- `GET /api/verify/:tokenId`: Verify certificate authenticity
+- `GET /api/user/:address`: Get all certificates for a user
+
+### Health Check
+- `GET /health`: API health status
+
+### Environment Variables (Backend)
+```env
+PORT=4000
+PINATA_JWT=your_pinata_jwt_token
+RPC_URL=https://your_ethereum_rpc_url
+CONTRACT_ADDRESS=0x...
+IPFS_GATEWAY=https://gateway.pinata.cloud/ipfs/
+```
+
+## � Deployment
 
 ### Testnet Deployment
 ```bash
@@ -121,6 +164,16 @@ npm run deploy:sepolia
 npx hardhat run scripts/deploy.ts --network mainnet
 ```
 
+### Backend Deployment
+```bash
+# Build backend
+cd backend
+npm run build
+
+# Start production server
+npm start
+```
+
 ### Frontend Deployment
 The frontend is configured for deployment on Vercel:
 
@@ -131,6 +184,7 @@ The frontend is configured for deployment on Vercel:
 ## 🌐 Live Demo
 
 - **Frontend**: [Deployed on Vercel]
+- **Backend API**: [Deployed API Endpoint]
 - **Smart Contract**: [Etherscan Link]
 - **Testnet**: Sepolia Testnet
 
@@ -154,6 +208,12 @@ VeriVault/
 │   └── deploy.ts         # Contract deployment script
 ├── test/                  # Smart contract tests
 │   └── Certisure.ts      # Contract test suite
+├── backend/               # Express.js API server
+│   ├── src/
+│   │   ├── index.ts      # Main server file with API endpoints
+│   │   └── pinata.ts     # IPFS/Pinata integration
+│   ├── dist/             # Compiled TypeScript output
+│   └── package.json      # Backend dependencies
 ├── frontend/              # React frontend application
 │   ├── src/
 │   │   ├── components/   # Reusable React components
@@ -175,10 +235,17 @@ VeriVault/
 - Gas settings optimized for each network
 - Etherscan verification configured
 
+### Backend Configuration
+- **Express Server**: TypeScript with hot reload in development
+- **IPFS Integration**: Pinata for decentralized file storage
+- **Security**: CORS enabled, file size limits, SHA256 hashing
+- **Blockchain**: Ethers.js for contract interaction
+
 ### Frontend Configuration
-- Vite build system
-- TailwindCSS for styling
-- Web3 wallet integration via Wagmi
+- **Vite Build System**: Fast development and optimized builds
+- **TailwindCSS**: Utility-first CSS framework
+- **Web3 Integration**: Wagmi hooks for wallet connectivity
+- **Environment Variables**: Separate configs for development/production
 
 ## 🤝 Contributing
 
